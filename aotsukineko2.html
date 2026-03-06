@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>蒼月猫のどか食い気絶旅行</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700;800&family=DotGothic16&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:      #c8001a;
+  --red2:     #e8001e;
+  --yellow:   #f5c800;
+  --yellow2:  #fff0a0;
+  --cream:    #faf4e8;
+  --paper:    #f5ead0;
+  --brown:    #3a2010;
+  --brown2:   #6a4020;
+  --brown3:   #9a6040;
+  --green:    #1a5030;
+  --teal:     #006868;
+  --ink:      #1a1008;
+  --rule:     #c8a878;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Shippori Mincho', serif;
+  line-height: 1.8;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(180,140,80,0.07) 27px, rgba(180,140,80,0.07) 28px),
+    repeating-linear-gradient(90deg, transparent, transparent 27px, rgba(180,140,80,0.03) 27px, rgba(180,140,80,0.03) 28px);
+  pointer-events: none; z-index: 0;
+}
+
+.masthead {
+  background: var(--red);
+  position: relative;
+  border-bottom: 6px double var(--brown);
+}
+.masthead-top {
+  background: var(--brown);
+  text-align: center;
+  padding: 6px;
+  font-family: 'DotGothic16', monospace;
+  font-size: 11px;
+  color: var(--yellow);
+  letter-spacing: 0.3em;
+}
+.masthead-main {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 16px 32px;
+  gap: 16px;
+}
+.masthead-left {
+  font-family: 'DotGothic16', monospace;
+  font-size: 11px;
+  color: rgba(255,240,160,0.7);
+  line-height: 2;
+}
+.masthead-center { text-align: center; }
+.site-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(22px, 4vw, 40px);
+  font-weight: 800;
+  color: white;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+}
+.site-title-sub {
+  font-family: 'DotGothic16', monospace;
+  font-size: 11px;
+  color: var(--yellow);
+  letter-spacing: 0.4em;
+  margin-top: 4px;
+}
+.masthead-right {
+  text-align: right;
+  font-family: 'DotGothic16', monospace;
+  font-size: 11px;
+  color: rgba(255,240,160,0.7);
+  line-height: 2;
+}
+.masthead-chara {
+  position: absolute;
+  right: 180px; bottom: 0;
+  width: 90px;
+  pointer-events: none;
+}
+@media(max-width:760px){ .masthead-chara{display:none;} .masthead-main{grid-template-columns:1fr;} .masthead-left,.masthead-right{display:none;} }
+
+.navbar {
+  background: var(--brown);
+  border-bottom: 3px solid var(--yellow);
+  position: sticky; top: 0; z-index: 100;
+}
+.navbar-inner {
+  max-width: 960px; margin: 0 auto;
+  display: flex; align-items: stretch;
+}
+.navbar-inner a {
+  display: block;
+  padding: 10px 22px;
+  font-family: 'DotGothic16', monospace;
+  font-size: 12px; letter-spacing: 0.2em;
+  color: var(--yellow2);
+  text-decoration: none;
+  border-right: 1px solid rgba(255,240,160,0.15);
+  transition: background 0.15s, color 0.15s;
+}
+.navbar-inner a:hover { background: var(--red); color: white; }
+
+.wrapper {
+  max-width: 960px; margin: 0 auto;
+  padding: 40px 24px;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 40px;
+  position: relative; z-index: 1;
+}
+@media(max-width:800px){ .wrapper{grid-template-columns:1fr;} }
+
+.section-head {
+  display: flex; align-items: baseline; gap: 12px;
+  border-top: 4px solid var(--red);
+  border-bottom: 1px solid var(--rule);
+  padding: 8px 0;
+  margin-bottom: 28px;
+}
+.section-head h2 { font-size: 20px; font-weight: 800; color: var(--brown); letter-spacing: 0.05em; }
+.section-head span { font-family: 'DotGothic16', monospace; font-size: 11px; color: var(--brown3); letter-spacing: 0.2em; }
+
+.feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 2px solid var(--rule);
+  margin-bottom: 32px;
+  background: white;
+}
+@media(max-width:600px){ .feature{grid-template-columns:1fr;} }
+.feature-img {
+  background: var(--paper);
+  min-height: 220px;
+  display: flex; align-items: center; justify-content: center;
+  border-right: 2px solid var(--rule);
+  padding: 20px;
+}
+@media(max-width:600px){ .feature-img{border-right:none; border-bottom:2px solid var(--rule);} }
+.feature-body { padding: 24px; }
+.article-tag {
+  display: inline-block;
+  background: var(--red); color: white;
+  font-family: 'DotGothic16', monospace;
+  font-size: 10px; letter-spacing: 0.2em;
+  padding: 2px 10px; margin-bottom: 10px;
+}
+.article-headline {
+  font-size: 22px; font-weight: 800; line-height: 1.4;
+  color: var(--brown); margin-bottom: 10px;
+  border-bottom: 1px dotted var(--rule);
+  padding-bottom: 10px;
+}
+.article-byline {
+  font-family: 'DotGothic16', monospace;
+  font-size: 10px; color: var(--brown3);
+  letter-spacing: 0.2em; margin-bottom: 14px;
+}
+.article-body { font-size: 14px; line-height: 2.1; color: var(--ink); }
+.article-body p { margin-bottom: 10px; }
+.article-body strong { color: var(--red); font-weight: 700; }
+
+.ketsu-stamp {
+  display: inline-block;
+  background: var(--red); color: white;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 13px; font-weight: 800;
+  padding: 6px 16px;
+  transform: rotate(-3deg);
+  margin: 8px 0;
+  border: 2px solid darkred;
+  letter-spacing: 0.1em;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+}
+.bsugar-meter {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 12px 16px; margin: 14px 0;
+  font-family: 'DotGothic16', monospace;
+  font-size: 11px; color: var(--brown2);
+}
+.bsugar-bar-wrap { width: 100%; height: 12px; background: #ddd; margin-top: 6px; border: 1px solid #bbb; position: relative; overflow: hidden; }
+.bsugar-bar { height: 100%; background: linear-gradient(90deg, #f5c800, #ff6600, #cc0000); transition: width 1.5s ease; width: 0; }
+.bsugar-label { display: flex; justify-content: space-between; font-size: 9px; color: var(--brown3); margin-top: 2px; }
+
+.posts-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  border: 1px solid var(--rule); margin-bottom: 32px;
+}
+@media(max-width:500px){.posts-grid{grid-template-columns:1fr;}}
+.post-item {
+  padding: 20px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  background: white; transition: background 0.15s; cursor: pointer;
+}
+.post-item:nth-child(even){ border-right: none; }
+.post-item:nth-last-child(-n+2){ border-bottom: none; }
+@media(max-width:500px){.post-item{border-right:none !important;}}
+.post-item:hover { background: var(--yellow2); }
+.post-date { font-family: 'DotGothic16', monospace; font-size: 10px; color: var(--brown3); letter-spacing: 0.2em; margin-bottom: 6px; }
+.post-title { font-size: 15px; font-weight: 700; color: var(--brown); line-height: 1.5; margin-bottom: 8px; }
+.post-excerpt { font-size: 12px; color: #666; line-height: 1.9; }
+.post-tags { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+.post-tag { font-family: 'DotGothic16', monospace; font-size: 9px; padding: 2px 8px; border: 1px solid var(--rule); color: var(--brown3); background: var(--paper); }
+.post-tag.red { border-color: var(--red); color: var(--red); background: #fff0f0; }
+
+.sidebar-block { border: 2px solid var(--rule); margin-bottom: 24px; background: white; }
+.sidebar-head { background: var(--brown); color: var(--yellow); font-family: 'DotGothic16', monospace; font-size: 11px; letter-spacing: 0.3em; padding: 8px 14px; }
+.sidebar-body { padding: 16px; }
+
+.profile-chara-wrap { display: flex; justify-content: center; margin-bottom: 12px; }
+.profile-name-side { font-size: 17px; font-weight: 800; color: var(--brown); text-align: center; margin-bottom: 4px; }
+.profile-desc { font-size: 12px; line-height: 1.9; color: #555; border-top: 1px dotted var(--rule); padding-top: 10px; margin-top: 8px; }
+
+.ketsu-log-item { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px dotted var(--rule); font-size: 12px; }
+.ketsu-log-item:last-child{ border-bottom:none; }
+.ketsu-num { font-family: 'DotGothic16', monospace; font-size: 18px; font-weight: 900; color: var(--red); min-width: 36px; text-align: center; line-height: 1; }
+.ketsu-detail { color: #444; line-height: 1.7; }
+.ketsu-detail b { color: var(--brown); display: block; }
+
+.rank-row { display: flex; gap: 8px; align-items: center; padding: 7px 0; border-bottom: 1px dotted var(--rule); font-size: 12px; color: var(--ink); }
+.rank-row:last-child{border-bottom:none;}
+.rank-num-side { font-family: 'DotGothic16', monospace; font-size: 14px; color: var(--red); min-width: 20px; font-weight: 700; }
+
+.map-ascii { font-family: 'DotGothic16', monospace; font-size: 10px; line-height: 1.6; color: var(--teal); background: #f0fff8; padding: 10px; border: 1px solid #aaddcc; white-space: pre; overflow: hidden; }
+
+.ketsu-banner {
+  background: var(--red); color: white; text-align: center;
+  padding: 16px; margin-bottom: 32px; border: 3px double #ff8080;
+  position: relative; z-index: 1;
+}
+.ketsu-banner-num { font-size: 52px; font-weight: 800; line-height: 1; text-shadow: 3px 3px 0 rgba(0,0,0,0.3); font-family: 'Shippori Mincho', serif; }
+.ketsu-banner-label { font-family: 'DotGothic16', monospace; font-size: 12px; letter-spacing: 0.4em; color: var(--yellow); margin-top: 4px; }
+.ketsu-banner-note { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 4px; font-family: 'DotGothic16', monospace; }
+
+.site-footer { background: var(--brown); color: rgba(255,240,160,0.6); text-align: center; padding: 32px 24px; border-top: 4px double var(--yellow); font-family: 'DotGothic16', monospace; font-size: 11px; line-height: 2.4; letter-spacing: 0.2em; position: relative; z-index: 1; }
+.site-footer b { color: var(--yellow); font-size: 16px; }
+
+.reveal { opacity:0; transform:translateY(16px); transition:opacity 0.5s, transform 0.5s; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-top">◆ 蒼月猫 どか食い新聞 ◆ 毎週不定期発行 ◆ 購読無料 ◆ 血糖値爆上がり保証付き ◆</div>
+  <div class="masthead-main">
+    <div class="masthead-left">創刊：令和元年<br>累計気絶：27回<br>発行人：蒼月猫</div>
+    <div class="masthead-center">
+      <div class="site-title">蒼月猫の<br>どか食い気絶旅行</div>
+      <div class="site-title-sub">〜 血糖値と共に倒れた記録 〜</div>
+    </div>
+    <div class="masthead-right">気絶回数：27回<br>訪問都市：32市<br>胃袋：∞</div>
+  </div>
+  <div class="masthead-chara">
+    <svg viewBox="0 0 90 110" fill="none" xmlns="http://www.w3.org/2000/svg" width="90" height="110">
+      <ellipse cx="45" cy="82" rx="30" ry="28" fill="#3a4870"/>
+      <ellipse cx="45" cy="88" rx="18" ry="18" fill="#4a5888" opacity="0.6"/>
+      <ellipse cx="30" cy="106" rx="10" ry="6" fill="#3a4870"/>
+      <ellipse cx="60" cy="106" rx="10" ry="6" fill="#3a4870"/>
+      <path d="M18 76 Q45 70 72 76 Q70 86 45 84 Q20 86 18 76Z" fill="#c8001a"/>
+      <ellipse cx="45" cy="52" rx="32" ry="30" fill="#3a4870"/>
+      <polygon points="16,32 8,12 26,24" fill="#3a4870"/>
+      <polygon points="74,32 82,12 64,24" fill="#3a4870"/>
+      <polygon points="17,30 11,16 25,24" fill="#7070a0" opacity="0.5"/>
+      <polygon points="73,30 79,16 65,24" fill="#7070a0" opacity="0.5"/>
+      <ellipse cx="26" cy="56" rx="9" ry="5" fill="#e060a0" opacity="0.4"/>
+      <ellipse cx="64" cy="56" rx="9" ry="5" fill="#e060a0" opacity="0.4"/>
+      <rect x="17" y="44" width="22" height="16" rx="5" fill="rgba(200,240,255,0.15)" stroke="#f5e6a0" stroke-width="1.8"/>
+      <rect x="51" y="44" width="22" height="16" rx="5" fill="rgba(200,240,255,0.15)" stroke="#f5e6a0" stroke-width="1.8"/>
+      <line x1="39" y1="52" x2="51" y2="52" stroke="#f5e6a0" stroke-width="1.8"/>
+      <line x1="17" y1="52" x2="8" y2="50" stroke="#f5e6a0" stroke-width="1.4"/>
+      <line x1="73" y1="52" x2="82" y2="50" stroke="#f5e6a0" stroke-width="1.4"/>
+      <circle cx="28" cy="52" r="6" fill="#1a2040"/>
+      <circle cx="62" cy="52" r="6" fill="#1a2040"/>
+      <circle cx="30" cy="50" r="2" fill="white"/>
+      <circle cx="64" cy="50" r="2" fill="white"/>
+      <polygon points="45,60 42,64 48,64" fill="#d060a0"/>
+      <text x="70" y="28" font-family="serif" font-size="8" fill="#f5e6a0" font-weight="bold" opacity="0.9">z</text>
+      <text x="76" y="20" font-family="serif" font-size="10" fill="#f5e6a0" font-weight="bold" opacity="0.9">z</text>
+      <text x="83" y="12" font-family="serif" font-size="12" fill="#f5e6a0" font-weight="bold" opacity="0.9">Z</text>
+    </svg>
+  </div>
+</header>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="#">▶ トップ</a>
+    <a href="#posts">▶ 旅行記</a>
+    <a href="#ketsulog">▶ 気絶記録</a>
+    <a href="#">▶ 名店MAP</a>
+    <a href="#">▶ お問い合わせ</a>
+  </div>
+</nav>
+
+<div class="wrapper">
+  <main>
+
+    <div class="ketsu-banner reveal">
+      <div class="ketsu-banner-num">27</div>
+      <div class="ketsu-banner-label">▲ 累計気絶回数（食後血糖値爆上がりによる） ▲</div>
+      <div class="ketsu-banner-note">※ すべて食べ過ぎによる血糖値急上昇が原因です。美味しさは関係ありません。</div>
+    </div>
+
+    <div class="section-head reveal">
+      <h2>◎ 最新レポート</h2>
+      <span>LATEST REPORT</span>
+    </div>
+
+    <article class="feature reveal">
+      <div class="feature-img">
+        <svg viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="220" height="200">
+          <rect x="20" y="150" width="180" height="12" rx="3" fill="#8B4513"/>
+          <rect x="30" y="162" width="10" height="30" fill="#6B3410"/>
+          <rect x="180" y="162" width="10" height="30" fill="#6B3410"/>
+          <ellipse cx="110" cy="148" rx="55" ry="12" fill="#cc8844"/>
+          <path d="M58 148 Q58 185 110 188 Q162 185 162 148Z" fill="#ddaa66"/>
+          <ellipse cx="110" cy="148" rx="50" ry="10" fill="#e8c080"/>
+          <path d="M75 145 Q85 138 95 145 Q105 152 115 145 Q125 138 135 145" stroke="#f5e0a0" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M80 140 Q90 133 100 140 Q110 147 120 140 Q130 133 140 140" stroke="#f5e0a0" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="95" cy="142" rx="16" ry="10" fill="#c06040"/>
+          <ellipse cx="95" cy="142" rx="12" ry="7" fill="#d87850"/>
+          <ellipse cx="128" cy="140" rx="13" ry="12" fill="#f8e060"/>
+          <ellipse cx="128" cy="140" rx="8" ry="8" fill="#f09020"/>
+          <line x1="60" y1="100" x2="95" y2="145" stroke="#c8a060" stroke-width="3" stroke-linecap="round"/>
+          <line x1="68" y1="98" x2="100" y2="143" stroke="#c8a060" stroke-width="3" stroke-linecap="round"/>
+          <path d="M90 128 Q86 118 90 108 Q94 98 90 88" stroke="rgba(200,200,200,0.6)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M110 125 Q106 115 110 105 Q114 95 110 85" stroke="rgba(200,200,200,0.5)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M130 128 Q126 118 130 108 Q134 98 130 88" stroke="rgba(200,200,200,0.4)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <rect x="148" y="120" width="50" height="30" rx="3" fill="#fafafa" stroke="#aaa" stroke-width="1"/>
+          <text x="154" y="133" font-family="serif" font-size="8" fill="#333">替え玉</text>
+          <text x="156" y="145" font-family="serif" font-size="9" fill="#c8001a" font-weight="bold">無料券</text>
+        </svg>
+      </div>
+      <div class="feature-body">
+        <span class="article-tag">【第27回気絶レポート】</span>
+        <h2 class="article-headline">博多ラーメン替え玉7回で<br>血糖値560に到達し<br>路上で静かに倒れた話</h2>
+        <div class="article-byline">2024年11月14日 ／ 蒼月猫 ／ 福岡県博多区</div>
+        <div class="article-body">
+          <p>深夜1時の博多。「替え玉無料」の看板を見た瞬間、私の理性は終わった。</p>
+          <p>1杯目：普通に美味しい。2杯目：背脂が追加されて美味しい。3杯目あたりから<strong>胃が「もういいよ」と言い始めた</strong>のを無視した。</p>
+          <p>替え玉7回目を食べ終えた瞬間、急激な眠気と共に意識が遠のいた。後で測ったら<strong>血糖値560mg/dL</strong>。店主に「また来たんですか」と言われた。</p>
+          <div class="bsugar-meter">
+            ▌血糖値推移モニター（この日）
+            <div class="bsugar-bar-wrap"><div class="bsugar-bar" id="bar1"></div></div>
+            <div class="bsugar-label"><span>入店前：92</span><span>替え玉3回：280</span><span>気絶直前：560 ⚠</span></div>
+          </div>
+          <span class="ketsu-stamp">😴 気絶認定 第27号</span>
+        </div>
+      </div>
+    </article>
+
+    <div class="section-head reveal">
+      <h2>◎ 旅行記アーカイブ</h2>
+      <span>TRAVEL ARCHIVE</span>
+    </div>
+
+    <div class="posts-grid reveal" id="posts">
+      <div class="post-item">
+        <div class="post-date">2024.10.22 ／ 北海道・函館</div>
+        <div class="post-title">カニ食べ放題180分、制限時間ギリギリまで食べ続けた結果</div>
+        <div class="post-excerpt">毛ガニ3杯、タラバ半分、ズワイ2杯。最後の1口で血糖値が急上昇し、帰りのバスで気絶。隣のご夫婦に毛布をかけていただいた。</div>
+        <div class="post-tags"><span class="post-tag red">😴 気絶あり</span><span class="post-tag">🦀 海鮮</span><span class="post-tag">北海道</span></div>
+      </div>
+      <div class="post-item">
+        <div class="post-date">2024.09.08 ／ 大阪・難波</div>
+        <div class="post-title">串カツ全種類制覇を試みた30代猫の末路</div>
+        <div class="post-excerpt">ソース二度漬け禁止のルールは守った。しかし全42種を完食した後、揚げ油と炭水化物の暴力で血糖値が急騰。立ち食いカウンターで静かに眠った。</div>
+        <div class="post-tags"><span class="post-tag red">😴 気絶あり</span><span class="post-tag">🍢 揚げ物</span><span class="post-tag">大阪</span></div>
+      </div>
+      <div class="post-item">
+        <div class="post-date">2024.08.15 ／ 京都・祇園</div>
+        <div class="post-title">甘味処はしご10軒で摂取した糖質の量が怖すぎた</div>
+        <div class="post-excerpt">わらび餅、かき氷（シロップ大盛）、おしるこ、みたらし4本。祇園の石畳の上で倒れていたところ、修学旅行生に写真を撮られた。</div>
+        <div class="post-tags"><span class="post-tag red">😴 気絶あり</span><span class="post-tag">🍡 甘味</span><span class="post-tag">京都</span></div>
+      </div>
+      <div class="post-item">
+        <div class="post-date">2024.07.03 ／ 石川・金沢</div>
+        <div class="post-title">のどぐろ尽くしコースで胃に白旗を揚げた記録</div>
+        <div class="post-excerpt">塩焼き、煮付け、しゃぶしゃぶ、丼。脂の質が異次元で、こちらの胃がついていけなかった。今回は純粋な脂質ショックで血糖値が乱れた。</div>
+        <div class="post-tags"><span class="post-tag">😌 今回は無事</span><span class="post-tag">🐟 魚介</span><span class="post-tag">石川</span></div>
+      </div>
+      <div class="post-item">
+        <div class="post-date">2024.05.18 ／ 福岡・中洲</div>
+        <div class="post-title">屋台はしごで焼き鳥100本食べた夜</div>
+        <div class="post-excerpt">中洲の屋台を7軒。タレと塩を交互に頼んでいたら100本を超えていた。締めにラーメンも食べた。翌朝起きたら知らない公園のベンチにいた。</div>
+        <div class="post-tags"><span class="post-tag red">😴 気絶あり（推定）</span><span class="post-tag">🐓 焼き鳥</span><span class="post-tag">福岡</span></div>
+      </div>
+      <div class="post-item">
+        <div class="post-date">2024.04.02 ／ 東京・築地</div>
+        <div class="post-title">朝6時から寿司食べ歩き、昼前に血糖値が崩壊した</div>
+        <div class="post-excerpt">空腹状態で高GIの白米寿司を大量摂取するのは最も危険なパターンだと医師に言われた。全くその通りだった。マグロ系だけで30貫食べた。</div>
+        <div class="post-tags"><span class="post-tag red">😴 気絶あり</span><span class="post-tag">🍣 寿司</span><span class="post-tag">東京</span></div>
+      </div>
+    </div>
+
+    <div class="reveal" style="background:#fff8f0; border:2px solid #e8c060; padding:20px; margin-bottom:32px; position:relative;">
+      <div style="position:absolute;top:-13px;left:16px; background:#f5c800; padding:2px 14px; font-family:'DotGothic16',monospace; font-size:11px; color:#3a2010; letter-spacing:0.2em;">⚠ 編集部より</div>
+      <p style="font-size:13px; line-height:2.1; color:#5a3a10;">当ブログに掲載されている気絶はすべて食べ過ぎによる<strong>血糖値の急上昇・急降下</strong>が原因です。食後の急激な眠気（食後高血糖）は実際に起こりうる症状です。皆さんはどか食いのマネをしないでください。蒼月猫は毎回反省していますが、次の旅でまたやります。</p>
+    </div>
+
+  </main>
+
+  <aside id="sidebar">
+
+    <div class="sidebar-block reveal">
+      <div class="sidebar-head">▌ プロフィール</div>
+      <div class="sidebar-body">
+        <div class="profile-chara-wrap">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+            <circle cx="50" cy="50" r="48" fill="#f0e8d0" stroke="#c8a878" stroke-width="2"/>
+            <ellipse cx="50" cy="62" rx="28" ry="24" fill="#3a4870"/>
+            <ellipse cx="50" cy="45" rx="30" ry="28" fill="#3a4870"/>
+            <polygon points="22,30 14,10 30,22" fill="#3a4870"/>
+            <polygon points="78,30 86,10 70,22" fill="#3a4870"/>
+            <ellipse cx="34" cy="48" rx="8" ry="8" fill="#1a2040"/>
+            <ellipse cx="66" cy="48" rx="8" ry="8" fill="#1a2040"/>
+            <circle cx="36" cy="46" r="2.5" fill="white"/>
+            <circle cx="68" cy="46" r="2.5" fill="white"/>
+            <rect x="24" y="42" width="20" height="13" rx="4" fill="none" stroke="#f5e6a0" stroke-width="1.8"/>
+            <rect x="56" y="42" width="20" height="13" rx="4" fill="none" stroke="#f5e6a0" stroke-width="1.8"/>
+            <line x1="44" y1="48" x2="56" y2="48" stroke="#f5e6a0" stroke-width="1.8"/>
+            <polygon points="50,56 46,61 54,61" fill="#d060a0"/>
+            <path d="M44 64 Q50 69 56 64" stroke="#d060a0" stroke-width="1.5" fill="none"/>
+            <ellipse cx="30" cy="52" rx="8" ry="4" fill="#e060a0" opacity="0.35"/>
+            <ellipse cx="70" cy="52" rx="8" ry="4" fill="#e060a0" opacity="0.35"/>
+          </svg>
+        </div>
+        <div class="profile-name-side">蒼月猫</div>
+        <div style="text-align:center; font-family:'DotGothic16',monospace; font-size:10px; color:#888; letter-spacing:0.2em;">VTuber ／ どか食い旅人</div>
+        <div class="profile-desc">まるまる眼鏡猫。全国を旅して食べまくるVTuber。食べ過ぎによる血糖値急上昇で気絶するのが持病。「今回こそ控えめにする」と言い続けて27回倒れた。</div>
+      </div>
+    </div>
+
+    <div class="sidebar-block reveal" id="ketsulog">
+      <div class="sidebar-head">▌ 最近の気絶記録</div>
+      <div class="sidebar-body">
+        <div class="ketsu-log-item">
+          <div class="ketsu-num">#27</div>
+          <div class="ketsu-detail"><b>博多 替え玉7回</b>血糖値560。路上。店主に「また…」と言われた。</div>
+        </div>
+        <div class="ketsu-log-item">
+          <div class="ketsu-num">#26</div>
+          <div class="ketsu-detail"><b>函館 カニ放題</b>帰りのバスで就寝。隣の夫婦が毛布をくれた。</div>
+        </div>
+        <div class="ketsu-log-item">
+          <div class="ketsu-num">#25</div>
+          <div class="ketsu-detail"><b>大阪 串カツ42種</b>立ち食いカウンターで眠った。</div>
+        </div>
+        <div class="ketsu-log-item">
+          <div class="ketsu-num">#24</div>
+          <div class="ketsu-detail"><b>京都 甘味10軒</b>石畳の上。修学旅行生に写真を撮られた。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-block reveal">
+      <div class="sidebar-head">▌ 殿堂入り名店</div>
+      <div class="sidebar-body">
+        <div class="rank-row"><span class="rank-num-side">1</span>博多「鶴亀」豚骨ラーメン</div>
+        <div class="rank-row"><span class="rank-num-side">2</span>函館「蟹番屋」毛ガニ放題</div>
+        <div class="rank-row"><span class="rank-num-side">3</span>金沢「海月」のどぐろ塩焼き</div>
+        <div class="rank-row"><span class="rank-num-side">4</span>京都「菊月」わらび餅</div>
+        <div class="rank-row"><span class="rank-num-side">5</span>築地「早起き」朝寿司</div>
+      </div>
+    </div>
+
+    <div class="sidebar-block reveal">
+      <div class="sidebar-head">▌ 訪問済み地域</div>
+      <div class="sidebar-body">
+        <div class="map-ascii">北海道 ★★★
+東　北 ★☆☆
+関　東 ★★☆
+中　部 ★★☆
+関　西 ★★★
+中　国 ★☆☆
+四　国 ☆☆☆
+九　州 ★★★
+沖　縄 ☆☆☆
+
+★=訪問済 ☆=未踏の地</div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <b>蒼月猫のどか食い気絶旅行</b><br>
+  〜 血糖値と共に倒れた記録 〜<br><br>
+  © 2024 蒼月猫　／　どか食いは計画的に<br>
+  ※ 当ブログの気絶はすべて食後高血糖によるものです。真似しないでください。
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+reveals.forEach(el => obs.observe(el));
+
+setTimeout(() => {
+  const bar = document.getElementById('bar1');
+  if(bar) bar.style.width = '94%';
+}, 800);
+</script>
+</body>
+</html>
